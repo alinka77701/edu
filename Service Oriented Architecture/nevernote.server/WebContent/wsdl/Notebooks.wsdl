@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://server.notebook.nevernote" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://server.notebook.nevernote" xmlns:intf="http://server.notebook.nevernote" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://server.notebook.nevernote" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="tryAuth">
+    <complexType/>
+   </element>
+   <element name="tryAuthResponse">
+    <complexType/>
+   </element>
+   <element name="createNotebook">
+    <complexType>
+     <sequence>
+      <element name="notebook" type="impl:Notebook"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Notebook">
+    <sequence>
+     <element name="created" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="readOnly" nillable="true" type="xsd:boolean"/>
+     <element name="shared" nillable="true" type="xsd:boolean"/>
+     <element name="type" nillable="true" type="xsd:string"/>
+     <element name="userId" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="createNotebookResponse">
+    <complexType/>
+   </element>
+   <complexType name="InvalidNotebookDetailsFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="uniqueName" nillable="true" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <element name="fault" type="impl:InvalidNotebookDetailsFault"/>
+   <element name="findNotebook">
+    <complexType>
+     <sequence>
+      <element name="nameNotebook" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findNotebookResponse">
+    <complexType>
+     <sequence>
+      <element name="findNotebookReturn" type="impl:Notebook"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="InvalidNotebookFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="fault1" type="impl:InvalidNotebookFault"/>
+   <element name="findNotebookById">
+    <complexType>
+     <sequence>
+      <element name="idNotebook" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findNotebookByIdResponse">
+    <complexType>
+     <sequence>
+      <element name="findNotebookByIdReturn" type="impl:Notebook"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteNotebook">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteNotebookResponse">
+    <complexType/>
+   </element>
+   <element name="makeNotebookPublic">
+    <complexType>
+     <sequence>
+      <element name="notebookId" type="xsd:int"/>
+      <element name="nickName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="makeNotebookPublicResponse">
+    <complexType/>
+   </element>
+   <element name="getAllNotebooks">
+    <complexType>
+     <sequence>
+      <element name="userId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllNotebooksResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllNotebooksReturn" type="impl:Notebook"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNotebook">
+    <complexType>
+     <sequence>
+      <element name="notebook" type="impl:Notebook"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNotebookResponse">
+    <complexType/>
+   </element>
+   <element name="deleteAllNotebooks">
+    <complexType>
+     <sequence>
+      <element name="userId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteAllNotebooksResponse">
+    <complexType/>
+   </element>
+   <element name="pushNotification">
+    <complexType>
+     <sequence>
+      <element name="changedByUser" type="xsd:string"/>
+      <element name="notebook" type="impl:Notebook"/>
+      <element name="isDeleted" type="xsd:boolean"/>
+      <element name="isChangedShared" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="pushNotificationResponse">
+    <complexType/>
+   </element>
+   <element name="deletePublicNotebook">
+    <complexType>
+     <sequence>
+      <element name="notebookId" type="xsd:int"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deletePublicNotebookResponse">
+    <complexType/>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="deleteAllNotebooksRequest">
+
+      <wsdl:part element="impl:deleteAllNotebooks" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createNotebookRequest">
+
+      <wsdl:part element="impl:createNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteNotebookRequest">
+
+      <wsdl:part element="impl:deleteNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateNotebookRequest">
+
+      <wsdl:part element="impl:updateNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pushNotificationRequest">
+
+      <wsdl:part element="impl:pushNotification" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deletePublicNotebookResponse">
+
+      <wsdl:part element="impl:deletePublicNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="tryAuthRequest">
+
+      <wsdl:part element="impl:tryAuth" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNotebookRequest">
+
+      <wsdl:part element="impl:findNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllNotebooksResponse">
+
+      <wsdl:part element="impl:getAllNotebooksResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="makeNotebookPublicRequest">
+
+      <wsdl:part element="impl:makeNotebookPublic" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="tryAuthResponse">
+
+      <wsdl:part element="impl:tryAuthResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNotebookByIdResponse">
+
+      <wsdl:part element="impl:findNotebookByIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="makeNotebookPublicResponse">
+
+      <wsdl:part element="impl:makeNotebookPublicResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateNotebookResponse">
+
+      <wsdl:part element="impl:updateNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidNotebookFault">
+
+      <wsdl:part element="impl:fault1" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllNotebooksRequest">
+
+      <wsdl:part element="impl:getAllNotebooks" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createNotebookResponse">
+
+      <wsdl:part element="impl:createNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidNotebookDetailsFault">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAllNotebooksResponse">
+
+      <wsdl:part element="impl:deleteAllNotebooksResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNotebookByIdRequest">
+
+      <wsdl:part element="impl:findNotebookById" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pushNotificationResponse">
+
+      <wsdl:part element="impl:pushNotificationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNotebookResponse">
+
+      <wsdl:part element="impl:findNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteNotebookResponse">
+
+      <wsdl:part element="impl:deleteNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deletePublicNotebookRequest">
+
+      <wsdl:part element="impl:deletePublicNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Notebooks">
+
+      <wsdl:operation name="tryAuth">
+
+         <wsdl:input message="impl:tryAuthRequest" name="tryAuthRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:tryAuthResponse" name="tryAuthResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createNotebook">
+
+         <wsdl:input message="impl:createNotebookRequest" name="createNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createNotebookResponse" name="createNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookDetailsFault" name="InvalidNotebookDetailsFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNotebook">
+
+         <wsdl:input message="impl:findNotebookRequest" name="findNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findNotebookResponse" name="findNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookFault" name="InvalidNotebookFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNotebookById">
+
+         <wsdl:input message="impl:findNotebookByIdRequest" name="findNotebookByIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findNotebookByIdResponse" name="findNotebookByIdResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookFault" name="InvalidNotebookFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteNotebook">
+
+         <wsdl:input message="impl:deleteNotebookRequest" name="deleteNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteNotebookResponse" name="deleteNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookFault" name="InvalidNotebookFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="makeNotebookPublic">
+
+         <wsdl:input message="impl:makeNotebookPublicRequest" name="makeNotebookPublicRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:makeNotebookPublicResponse" name="makeNotebookPublicResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllNotebooks">
+
+         <wsdl:input message="impl:getAllNotebooksRequest" name="getAllNotebooksRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllNotebooksResponse" name="getAllNotebooksResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotebook">
+
+         <wsdl:input message="impl:updateNotebookRequest" name="updateNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateNotebookResponse" name="updateNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookFault" name="InvalidNotebookFault">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:InvalidNotebookDetailsFault" name="InvalidNotebookDetailsFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAllNotebooks">
+
+         <wsdl:input message="impl:deleteAllNotebooksRequest" name="deleteAllNotebooksRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteAllNotebooksResponse" name="deleteAllNotebooksResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pushNotification">
+
+         <wsdl:input message="impl:pushNotificationRequest" name="pushNotificationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:pushNotificationResponse" name="pushNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deletePublicNotebook">
+
+         <wsdl:input message="impl:deletePublicNotebookRequest" name="deletePublicNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deletePublicNotebookResponse" name="deletePublicNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNotebookFault" name="InvalidNotebookFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="NotebooksSoapBinding" type="impl:Notebooks">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="tryAuth">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="tryAuthRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="tryAuthResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookDetailsFault">
+
+            <wsdlsoap:fault name="InvalidNotebookDetailsFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookFault">
+
+            <wsdlsoap:fault name="InvalidNotebookFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNotebookById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findNotebookByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findNotebookByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookFault">
+
+            <wsdlsoap:fault name="InvalidNotebookFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookFault">
+
+            <wsdlsoap:fault name="InvalidNotebookFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="makeNotebookPublic">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="makeNotebookPublicRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="makeNotebookPublicResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllNotebooks">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllNotebooksRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllNotebooksResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookFault">
+
+            <wsdlsoap:fault name="InvalidNotebookFault" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="InvalidNotebookDetailsFault">
+
+            <wsdlsoap:fault name="InvalidNotebookDetailsFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAllNotebooks">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteAllNotebooksRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteAllNotebooksResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pushNotification">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pushNotificationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pushNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deletePublicNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deletePublicNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deletePublicNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNotebookFault">
+
+            <wsdlsoap:fault name="InvalidNotebookFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="NotebooksService">
+
+      <wsdl:port binding="impl:NotebooksSoapBinding" name="Notebooks">
+
+         <wsdlsoap:address location="http://localhost:7672/nevernote.server/services/Notebooks"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

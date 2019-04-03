@@ -1,0 +1,77 @@
+context Issue {
+	constraint DescriptionMustBeDefined{
+		check: (self.description.isDefined()==true and self.description<>null)
+		fix {
+			title: "The description of the issue `" +self.name+"` is undefined. Change description to `standart description`"
+			do {
+				self.description="standart description";
+			}
+		}
+	}
+	
+	constraint DescriptionMustBeTenLength {
+	    guard: self.satisfies("DescriptionMustBeDefined")
+		check: self.description.length()>=10
+		message: "The description of the issue `" +self.name+"` must be at least 10 characters long"
+	}
+	
+	constraint IdMustBeUnique {
+		guard: self.ID.isDefined()
+		check: Issue.allInstances().select(i|i.ID=self.ID).size()=1
+		message: "Issue `"+self.name+"`  must have unique ID. Now it has ID=" +self.ID	
+	}
+	
+	constraint CanNotBeDuplicateOfItself{
+		check: self.duplicateOf.ID.excludes(self.ID)
+		message: "The issue `" +self.name+"` cannot be a duplicate of itself."
+	}
+	
+	constraint CanNotBeBlockedByItself {
+		check: self.blockedBy.ID.excludes(self.ID)
+		message: "The issue `" +self.name+"` cannot be blocked by itself."
+	}
+	
+	constraint isResolved {
+		check: self.status<>Status#open
+		message: "Status of issue `"+self.name+"` is open."
+	}
+	constraint CanNotHaveOpenBlockers {
+		guard: self.satisfies("isResolved")
+		check: self.blockedBy.size().println()<=0
+		message: "Closed issue `" +self.name+"` cannot have open blockers " + self.blockedBy
+	}
+	
+	constraint isBug {
+		check: self.isKindOf(Bug)==true 
+		message: "The issue `" + self.name + "` is a request."
+	}
+	
+	constraint BugsCannotBeBlockedByRequests {
+	    guard: self.satisfies("isBug")
+		check: self.blockedBy.select(i|i.isKindOf(Request)).isEmpty()== true
+		message: "Bug `" + self.name + "` cannot be blocked by Request '" +self.blockedBy.select(i|i.isKindOf(Request)).first().name + "'. Bugs cannot be blocked by requests!"
+	}
+	
+	constraint IssueMustHaveName {
+		check: (self.name.isDefined()==true and self.name<>null)
+		fix {
+			title: "Each issue must have name. Change name to `issue "+ Issue.allInstances().size() +"`?"
+			do {
+				self.name="issue "+Issue.allInstances().size();
+			}
+		}
+	}
+	
+	constraint hasBlockers {
+		check: self.blockedBy.size()>0
+		message: self.name+" has "+self.blockedBy.size()+" blockers"
+	}
+	
+	constraint NoBlockingCycle {
+		guard: self.satisfies("hasBlockers")
+		check: self.blockedBy.forAll(bb | not self.blockerFor.contains(bb))
+		message: "There must be no direct or indirect blocking cycles. Now `"+self.name+"` is blocked by `"+self.blockedBy.first().name+"` and is blocker for `"+self.blockerFor.first().name+"`"
+	}
+}
+
+

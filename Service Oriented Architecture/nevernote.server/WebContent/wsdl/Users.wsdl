@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://server.user.nevernote" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://server.user.nevernote" xmlns:intf="http://server.user.nevernote" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://server.user.nevernote" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="updateUser">
+    <complexType>
+     <sequence>
+      <element name="user" type="impl:User"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="User">
+    <sequence>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="nickName" nillable="true" type="xsd:string"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+     <element name="userId" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="updateUserResponse">
+    <complexType/>
+   </element>
+   <complexType name="InvalidUserDetailsFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="nickName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="fault" type="impl:InvalidUserDetailsFault"/>
+   <complexType name="InvalidUserFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="fault1" type="impl:InvalidUserFault"/>
+   <element name="deleteUser">
+    <complexType>
+     <sequence>
+      <element name="idUser" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteUserResponse">
+    <complexType/>
+   </element>
+   <element name="findUserById">
+    <complexType>
+     <sequence>
+      <element name="idUser" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findUserByIdResponse">
+    <complexType>
+     <sequence>
+      <element name="findUserByIdReturn" type="impl:User"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="InvalidUserFault">
+
+      <wsdl:part element="impl:fault1" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findUserByIdResponse">
+
+      <wsdl:part element="impl:findUserByIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteUserRequest">
+
+      <wsdl:part element="impl:deleteUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteUserResponse">
+
+      <wsdl:part element="impl:deleteUserResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findUserByIdRequest">
+
+      <wsdl:part element="impl:findUserById" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserResponse">
+
+      <wsdl:part element="impl:updateUserResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserRequest">
+
+      <wsdl:part element="impl:updateUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidUserDetailsFault">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Users">
+
+      <wsdl:operation name="updateUser">
+
+         <wsdl:input message="impl:updateUserRequest" name="updateUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateUserResponse" name="updateUserResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidUserFault" name="InvalidUserFault">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:InvalidUserDetailsFault" name="InvalidUserDetailsFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteUser">
+
+         <wsdl:input message="impl:deleteUserRequest" name="deleteUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteUserResponse" name="deleteUserResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidUserFault" name="InvalidUserFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findUserById">
+
+         <wsdl:input message="impl:findUserByIdRequest" name="findUserByIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findUserByIdResponse" name="findUserByIdResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidUserFault" name="InvalidUserFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="UsersSoapBinding" type="impl:Users">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="updateUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidUserFault">
+
+            <wsdlsoap:fault name="InvalidUserFault" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="InvalidUserDetailsFault">
+
+            <wsdlsoap:fault name="InvalidUserDetailsFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteUserRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteUserResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidUserFault">
+
+            <wsdlsoap:fault name="InvalidUserFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findUserById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findUserByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findUserByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidUserFault">
+
+            <wsdlsoap:fault name="InvalidUserFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="UsersService">
+
+      <wsdl:port binding="impl:UsersSoapBinding" name="Users">
+
+         <wsdlsoap:address location="http://localhost:7672/nevernote.server/services/Users"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

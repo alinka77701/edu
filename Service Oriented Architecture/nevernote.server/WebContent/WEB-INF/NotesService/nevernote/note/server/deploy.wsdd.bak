@@ -1,0 +1,93 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from NotesService WSDL service -->
+
+  <service name="Notes" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://server.note.nevernote"/>
+      <parameter name="wsdlServiceElement" value="NotesService"/>
+      <parameter name="schemaQualified" value="http://server.note.nevernote"/>
+      <parameter name="wsdlServicePort" value="Notes"/>
+      <parameter name="className" value="nevernote.note.server.NotesSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Notes"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="createNote" qname="operNS:createNote" xmlns:operNS="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:note" xmlns:pns="http://server.note.nevernote" type="tns:Note" xmlns:tns="http://server.note.nevernote"/>
+        <parameter qname="pns:changedByUser" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNoteDetailsFault" qname="fns:fault" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteDetailsFault" type="tns:InvalidNoteDetailsFault" xmlns:tns="http://server.note.nevernote"/>
+      </operation>
+      <operation name="findNote" qname="operNS:findNote" xmlns:operNS="http://server.note.nevernote" returnQName="retNS:findNoteReturn" xmlns:retNS="http://server.note.nevernote" returnType="rtns:Note" xmlns:rtns="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:titleNote" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:notebookId" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNoteFault" qname="fns:fault1" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteFault" type="tns:InvalidNoteFault" xmlns:tns="http://server.note.nevernote"/>
+      </operation>
+      <operation name="pushNotification" qname="operNS:pushNotification" xmlns:operNS="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:noteTitle" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:nickName" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:isDeleted" xmlns:pns="http://server.note.nevernote" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:isCreated" xmlns:pns="http://server.note.nevernote" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:parentNotebookId" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="findNoteById" qname="operNS:findNoteById" xmlns:operNS="http://server.note.nevernote" returnQName="retNS:findNoteByIdReturn" xmlns:retNS="http://server.note.nevernote" returnType="rtns:Note" xmlns:rtns="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:idNote" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNoteFault" qname="fns:fault1" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteFault" type="tns:InvalidNoteFault" xmlns:tns="http://server.note.nevernote"/>
+      </operation>
+      <operation name="deleteNoteFromNotebook" qname="operNS:deleteNoteFromNotebook" xmlns:operNS="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:idNote" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idNotebook" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:changedByUser" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNoteFault" qname="fns:fault1" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteFault" type="tns:InvalidNoteFault" xmlns:tns="http://server.note.nevernote"/>
+      </operation>
+      <operation name="updateNoteInNotebook" qname="operNS:updateNoteInNotebook" xmlns:operNS="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:note" xmlns:pns="http://server.note.nevernote" type="tns:Note" xmlns:tns="http://server.note.nevernote"/>
+        <parameter qname="pns:changedByUser" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNoteFault" qname="fns:fault1" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteFault" type="tns:InvalidNoteFault" xmlns:tns="http://server.note.nevernote"/>
+        <fault name="InvalidNoteDetailsFault" qname="fns:fault" xmlns:fns="http://server.note.nevernote" class="nevernote.note.server.InvalidNoteDetailsFault" type="tns:InvalidNoteDetailsFault" xmlns:tns="http://server.note.nevernote"/>
+      </operation>
+      <operation name="getAllNotesInNotebook" qname="operNS:getAllNotesInNotebook" xmlns:operNS="http://server.note.nevernote" returnQName="retNS:getAllNotesInNotebookReturn" xmlns:retNS="http://server.note.nevernote" returnType="rtns:Note" xmlns:rtns="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:idNotebook" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="deleteAllNotesInNotebook" qname="operNS:deleteAllNotesInNotebook" xmlns:operNS="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:idNotebook" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:changedByUser" xmlns:pns="http://server.note.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAllStarredNotes" qname="operNS:getAllStarredNotes" xmlns:operNS="http://server.note.nevernote" returnQName="retNS:getAllStarredNotesReturn" xmlns:retNS="http://server.note.nevernote" returnType="rtns:Note" xmlns:rtns="http://server.note.nevernote" soapAction="" >
+        <parameter qname="pns:idUser" xmlns:pns="http://server.note.nevernote" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="deleteAllNotesInNotebook findNoteById updateNoteInNotebook getAllNotesInNotebook createNote findNote deleteNoteFromNotebook getAllStarredNotes pushNotification"/>
+
+      <typeMapping
+        xmlns:ns="http://server.note.nevernote"
+        qname="ns:InvalidNoteDetailsFault"
+        type="java:nevernote.note.server.InvalidNoteDetailsFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.note.nevernote"
+        qname="ns:Note"
+        type="java:nevernote.note.server.Note"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.note.nevernote"
+        qname="ns:InvalidNoteFault"
+        type="java:nevernote.note.server.InvalidNoteFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

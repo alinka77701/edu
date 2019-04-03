@@ -1,0 +1,7 @@
+<ns1:requestFlow>
+   <ns1:handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+    <ns1:parameter name="passwordCallbackClass" value="nevernote.notebook.server.PasswordHandler"/>
+    <ns1:parameter name="action" value="UsernameToken"/>
+    <ns1:parameter name="passwordType" value="PasswordDigest"/>
+   </ns1:handler>
+</ns1:requestFlow>

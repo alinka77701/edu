@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="software_management">
+  <issues xsi:type="Bug" name="First bug" ID="11" description="description of first bug" assignee="//@members.0" versions="//@products.0/@versions.2 //@products.1/@versions.1">
+    <comments description="I can't make font bold" author="//@members.3">
+      <replies description="I can help you" author="//@members.0">
+        <replies description="Thank you" author="//@members.3"/>
+      </replies>
+    </comments>
+    <comments description="I can't make font cursive" author="//@members.5"/>
+    <blockerFor xsi:type="Request" href="default.software_management#//@issues.1"/>
+  </issues>
+  <issues xsi:type="Bug" name="Second bug" ID="1" description="description of second bug" reporter="//@members.1" versions="//@products.2/@versions.1">
+    <comments description="I can't insert picture" author="//@members.2"/>
+  </issues>
+  <issues xsi:type="Bug" name="Third bug" ID="3" description="des" blockedBy="//@issues.2" blockerFor="//@issues.2"/>
+  <issues xsi:type="Request" name="First request" ID="5" description="description offgbfgbg"/>
+  <members name="Will"/>
+  <members name="Jo"/>
+  <members name="Alex"/>
+  <members name="Ying"/>
+  <members name="Finn"/>
+  <members name="Peter"/>
+  <products name="MS PowerPoint">
+    <versions name="1.0.0"/>
+    <versions name="1.0.1"/>
+    <versions name="1.0.2"/>
+  </products>
+  <products name="MS Excel">
+    <versions name="2017"/>
+    <versions name="2018"/>
+    <versions name="2019"/>
+  </products>
+  <products name="MS Outlook">
+    <versions name="outlook 2017"/>
+    <versions name="outlook 2018"/>
+  </products>
+  <products name="MS OneNote">
+    <versions name="1.0"/>
+    <versions name="2.0"/>
+    <versions name="3.0"/>
+  </products>
+</Model>

@@ -1,0 +1,34 @@
+<h1>The details and comments of issue [%=i.ID%]: [%=i.Name%]</h1>
+<p>Description: [%=i.Description%]</p>
+<p>Status: [%=i.Status%]</p>
+
+<h2>Comments</h2>
+<table border="1">
+	<tr>
+		<td>Description</td>
+		<td>Author</td>
+		<td>Creation Date</td>
+		<td>Parent Comment</td>
+	</tr>
+	[%for (comment in i.Comments){%]
+	
+	<tr>
+		<td>[%=comment.Description%]</td>
+		<td> [%=comment.Author.Name%]</td>
+		<td>[%=comment.creationDate%]</td>
+		<td>This comment is root and has no parent.</td>
+	</tr>
+	[%if (comment.replies.size()>0){%] 
+		[%for (reply in comment.replies){%]
+		 <tr>
+			<td>[%=reply.Description%]</td>
+			<td> [%=reply.Author.Name%]</td>
+			<td>[%=reply.creationDate%]</td>
+			<td>[%=comment.Description%]</td>
+		</tr>
+		[%}%]
+	[%}%]
+	[%}%]
+	
+</table>
+

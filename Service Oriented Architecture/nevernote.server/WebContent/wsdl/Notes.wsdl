@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://server.note.nevernote" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://server.note.nevernote" xmlns:intf="http://server.note.nevernote" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://server.note.nevernote" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="createNote">
+    <complexType>
+     <sequence>
+      <element name="note" type="impl:Note"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Note">
+    <sequence>
+     <element name="created" nillable="true" type="xsd:string"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="noteBookId" type="xsd:int"/>
+     <element name="starred" nillable="true" type="xsd:boolean"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+     <element name="userId" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="createNoteResponse">
+    <complexType/>
+   </element>
+   <complexType name="InvalidNoteDetailsFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+     <element name="uniqueTitle" nillable="true" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <element name="fault" type="impl:InvalidNoteDetailsFault"/>
+   <element name="findNote">
+    <complexType>
+     <sequence>
+      <element name="titleNote" type="xsd:string"/>
+      <element name="notebookId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findNoteResponse">
+    <complexType>
+     <sequence>
+      <element name="findNoteReturn" type="impl:Note"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="InvalidNoteFault">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="fault1" type="impl:InvalidNoteFault"/>
+   <element name="pushNotification">
+    <complexType>
+     <sequence>
+      <element name="noteTitle" type="xsd:string"/>
+      <element name="nickName" type="xsd:string"/>
+      <element name="isDeleted" type="xsd:boolean"/>
+      <element name="isCreated" type="xsd:boolean"/>
+      <element name="parentNotebookId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="pushNotificationResponse">
+    <complexType/>
+   </element>
+   <element name="findNoteById">
+    <complexType>
+     <sequence>
+      <element name="idNote" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findNoteByIdResponse">
+    <complexType>
+     <sequence>
+      <element name="findNoteByIdReturn" type="impl:Note"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteNoteFromNotebook">
+    <complexType>
+     <sequence>
+      <element name="idNote" type="xsd:int"/>
+      <element name="idNotebook" type="xsd:int"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteNoteFromNotebookResponse">
+    <complexType/>
+   </element>
+   <element name="updateNoteInNotebook">
+    <complexType>
+     <sequence>
+      <element name="note" type="impl:Note"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNoteInNotebookResponse">
+    <complexType/>
+   </element>
+   <element name="getAllNotesInNotebook">
+    <complexType>
+     <sequence>
+      <element name="idNotebook" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllNotesInNotebookResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllNotesInNotebookReturn" type="impl:Note"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteAllNotesInNotebook">
+    <complexType>
+     <sequence>
+      <element name="idNotebook" type="xsd:int"/>
+      <element name="changedByUser" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteAllNotesInNotebookResponse">
+    <complexType/>
+   </element>
+   <element name="getAllStarredNotes">
+    <complexType>
+     <sequence>
+      <element name="idUser" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllStarredNotesResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllStarredNotesReturn" type="impl:Note"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="findNoteByIdRequest">
+
+      <wsdl:part element="impl:findNoteById" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pushNotificationResponse">
+
+      <wsdl:part element="impl:pushNotificationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidNoteDetailsFault">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNoteByIdResponse">
+
+      <wsdl:part element="impl:findNoteByIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAllNotesInNotebookResponse">
+
+      <wsdl:part element="impl:deleteAllNotesInNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteNoteFromNotebookResponse">
+
+      <wsdl:part element="impl:deleteNoteFromNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllNotesInNotebookRequest">
+
+      <wsdl:part element="impl:getAllNotesInNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAllNotesInNotebookRequest">
+
+      <wsdl:part element="impl:deleteAllNotesInNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidNoteFault">
+
+      <wsdl:part element="impl:fault1" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNoteRequest">
+
+      <wsdl:part element="impl:findNote" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="pushNotificationRequest">
+
+      <wsdl:part element="impl:pushNotification" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createNoteRequest">
+
+      <wsdl:part element="impl:createNote" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createNoteResponse">
+
+      <wsdl:part element="impl:createNoteResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateNoteInNotebookRequest">
+
+      <wsdl:part element="impl:updateNoteInNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateNoteInNotebookResponse">
+
+      <wsdl:part element="impl:updateNoteInNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteNoteFromNotebookRequest">
+
+      <wsdl:part element="impl:deleteNoteFromNotebook" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllNotesInNotebookResponse">
+
+      <wsdl:part element="impl:getAllNotesInNotebookResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllStarredNotesResponse">
+
+      <wsdl:part element="impl:getAllStarredNotesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllStarredNotesRequest">
+
+      <wsdl:part element="impl:getAllStarredNotes" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNoteResponse">
+
+      <wsdl:part element="impl:findNoteResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Notes">
+
+      <wsdl:operation name="createNote">
+
+         <wsdl:input message="impl:createNoteRequest" name="createNoteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createNoteResponse" name="createNoteResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNoteDetailsFault" name="InvalidNoteDetailsFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNote">
+
+         <wsdl:input message="impl:findNoteRequest" name="findNoteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findNoteResponse" name="findNoteResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNoteFault" name="InvalidNoteFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pushNotification">
+
+         <wsdl:input message="impl:pushNotificationRequest" name="pushNotificationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:pushNotificationResponse" name="pushNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNoteById">
+
+         <wsdl:input message="impl:findNoteByIdRequest" name="findNoteByIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findNoteByIdResponse" name="findNoteByIdResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNoteFault" name="InvalidNoteFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteNoteFromNotebook">
+
+         <wsdl:input message="impl:deleteNoteFromNotebookRequest" name="deleteNoteFromNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteNoteFromNotebookResponse" name="deleteNoteFromNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNoteFault" name="InvalidNoteFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNoteInNotebook">
+
+         <wsdl:input message="impl:updateNoteInNotebookRequest" name="updateNoteInNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateNoteInNotebookResponse" name="updateNoteInNotebookResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:InvalidNoteFault" name="InvalidNoteFault">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:InvalidNoteDetailsFault" name="InvalidNoteDetailsFault">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllNotesInNotebook">
+
+         <wsdl:input message="impl:getAllNotesInNotebookRequest" name="getAllNotesInNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllNotesInNotebookResponse" name="getAllNotesInNotebookResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAllNotesInNotebook">
+
+         <wsdl:input message="impl:deleteAllNotesInNotebookRequest" name="deleteAllNotesInNotebookRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteAllNotesInNotebookResponse" name="deleteAllNotesInNotebookResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllStarredNotes">
+
+         <wsdl:input message="impl:getAllStarredNotesRequest" name="getAllStarredNotesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllStarredNotesResponse" name="getAllStarredNotesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="NotesSoapBinding" type="impl:Notes">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createNote">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createNoteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createNoteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNoteDetailsFault">
+
+            <wsdlsoap:fault name="InvalidNoteDetailsFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNote">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findNoteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findNoteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNoteFault">
+
+            <wsdlsoap:fault name="InvalidNoteFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="pushNotification">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pushNotificationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pushNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNoteById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findNoteByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findNoteByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNoteFault">
+
+            <wsdlsoap:fault name="InvalidNoteFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteNoteFromNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteNoteFromNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteNoteFromNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNoteFault">
+
+            <wsdlsoap:fault name="InvalidNoteFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNoteInNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateNoteInNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateNoteInNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="InvalidNoteFault">
+
+            <wsdlsoap:fault name="InvalidNoteFault" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="InvalidNoteDetailsFault">
+
+            <wsdlsoap:fault name="InvalidNoteDetailsFault" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllNotesInNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllNotesInNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllNotesInNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAllNotesInNotebook">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteAllNotesInNotebookRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteAllNotesInNotebookResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllStarredNotes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllStarredNotesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllStarredNotesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="NotesService">
+
+      <wsdl:port binding="impl:NotesSoapBinding" name="Notes">
+
+         <wsdlsoap:address location="http://localhost:7672/nevernote.server/services/Notes"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

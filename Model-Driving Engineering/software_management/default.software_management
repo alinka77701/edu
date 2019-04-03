@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="software_management">
+  <issues xsi:type="Bug" name="First bug" ID="11" description="description of first bug" assignee="//@members.2" versions="//@products.2/@versions.2 //@products.0/@versions.1" blockerFor="//@issues.5">
+    <comments description="I can't make font bold" author="//@members.1">
+      <replies description="I can help you" author="//@members.2">
+        <replies description="Thank you" author="//@members.1"/>
+      </replies>
+    </comments>
+    <comments description="I can't make font cursive" author="//@members.7"/>
+  </issues>
+  <issues xsi:type="Bug" name="Second bug" ID="1" description="description of second bug" reporter="//@members.3" versions="//@products.3/@versions.1">
+    <comments description="I can't insert picture" author="//@members.0"/>
+  </issues>
+  <issues xsi:type="Bug" name="Third bug" ID="3" description="des" blockedBy="//@issues.2" blockerFor="//@issues.2"/>
+  <issues xsi:type="Request" name="First request" ID="5" description="description offgbfgbg"/>
+  <issues xsi:type="Request" name="Issue 6" ID="6" description="description of second request" status="resolved" reporter="//@members.6" versions="//@products.1/@versions.2"/>
+  <issues xsi:type="Request" name="Third request" ID="7" description="standart description" status="resolved" reporter="//@members.3" assignee="//@members.8 //@members.4" versions="//@products.1/@versions.0 //@products.3/@versions.0" blockedBy="//@issues.0"/>
+  <members name="Alex"/>
+  <members name="Ying"/>
+  <members name="Will"/>
+  <members name="Jo"/>
+  <members name="Jack"/>
+  <members name="Finn"/>
+  <members name="Harry"/>
+  <members name="Peter"/>
+  <members name="Mike"/>
+  <products name="MS Excel">
+    <versions name="2017"/>
+    <versions name="2018"/>
+    <versions name="2019"/>
+  </products>
+  <products name="MS Word">
+    <versions name="12"/>
+    <versions name="14"/>
+    <versions name="15"/>
+    <versions name="16"/>
+  </products>
+  <products name="MS PowerPoint">
+    <versions name="1.0.0"/>
+    <versions name="1.0.1"/>
+    <versions name="1.0.2"/>
+  </products>
+  <products name="MS Outlook">
+    <versions name="outlook 2017"/>
+    <versions name="outlook 2018"/>
+  </products>
+  <products name="MS OneNote">
+    <versions name="1.0"/>
+    <versions name="2.0"/>
+    <versions name="3.0"/>
+  </products>
+</Model>

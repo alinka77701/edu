@@ -1,0 +1,16 @@
+<h1>List of issues related to a specific product or product version</h1>
+
+<table border="1">
+	<tr>
+		<td>Issue name</td>
+		<td>ID</td>
+		<td>Product-Version</td>
+	</tr>
+	[%for (i in Issue.allInstances()){%]
+	<tr>
+		<td>[%=i.Name%]</td>
+		<td> [%=i.ID%]</td>
+		<td>[%=i.Versions.println().parentProduct.println().Name%]-[%=i.Versions.Name%]</td>
+	</tr>
+	[%}%]
+</table>

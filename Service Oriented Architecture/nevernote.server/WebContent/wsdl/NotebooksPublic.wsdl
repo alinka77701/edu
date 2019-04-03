@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://server.notebook.nevernote" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://server.notebook.nevernote" xmlns:intf="http://server.notebook.nevernote" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://server.notebook.nevernote" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getAllPublicNotebooks">
+    <complexType/>
+   </element>
+   <element name="getAllPublicNotebooksResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllPublicNotebooksReturn" type="impl:Notebook"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Notebook">
+    <sequence>
+     <element name="created" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="readOnly" nillable="true" type="xsd:boolean"/>
+     <element name="shared" nillable="true" type="xsd:boolean"/>
+     <element name="type" nillable="true" type="xsd:string"/>
+     <element name="userId" type="xsd:int"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getAllPublicNotebooksResponse">
+
+      <wsdl:part element="impl:getAllPublicNotebooksResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllPublicNotebooksRequest">
+
+      <wsdl:part element="impl:getAllPublicNotebooks" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="NotebooksPublic">
+
+      <wsdl:operation name="getAllPublicNotebooks">
+
+         <wsdl:input message="impl:getAllPublicNotebooksRequest" name="getAllPublicNotebooksRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllPublicNotebooksResponse" name="getAllPublicNotebooksResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="NotebooksPublicSoapBinding" type="impl:NotebooksPublic">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAllPublicNotebooks">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllPublicNotebooksRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllPublicNotebooksResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="NotebooksPublicService">
+
+      <wsdl:port binding="impl:NotebooksPublicSoapBinding" name="NotebooksPublic">
+
+         <wsdlsoap:address location="http://localhost:7672/nevernote.server/services/NotebooksPublic"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

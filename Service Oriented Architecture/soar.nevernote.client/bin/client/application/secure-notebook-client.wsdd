@@ -1,0 +1,19 @@
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+ <transport name="http" pivot="java:org.apache.axis.transport.http.HTTPSender"/>
+
+  <globalConfiguration >
+
+   <requestFlow >
+
+    <handler type="java:org.apache.ws.axis.security.WSDoAllSender" >
+     <parameter name="action" value="UsernameToken"/>
+     <parameter name="passwordCallbackClass" value="client.application.PasswordHandler"/>
+     <parameter name="passwordType" value="PasswordDigest"/>
+    </handler>
+
+   </requestFlow >
+
+  </globalConfiguration >
+
+</deployment>

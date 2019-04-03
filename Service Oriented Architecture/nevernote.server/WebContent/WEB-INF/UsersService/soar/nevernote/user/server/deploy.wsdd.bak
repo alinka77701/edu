@@ -1,0 +1,67 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from UsersService WSDL service -->
+
+  <service name="Users" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://server.user.nevernote.soar"/>
+      <parameter name="wsdlServiceElement" value="UsersService"/>
+      <parameter name="schemaQualified" value="http://server.user.nevernote.soar"/>
+      <parameter name="wsdlServicePort" value="Users"/>
+      <parameter name="className" value="soar.nevernote.user.server.UsersSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Users"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="createUser" qname="operNS:createUser" xmlns:operNS="http://server.user.nevernote.soar" soapAction="" >
+        <parameter qname="pns:user" xmlns:pns="http://server.user.nevernote.soar" type="tns:User" xmlns:tns="http://server.user.nevernote.soar"/>
+        <fault name="InvalidUserDetailsFault" qname="fns:fault" xmlns:fns="http://server.user.nevernote.soar" class="soar.nevernote.user.server.InvalidUserDetailsFault" type="tns:InvalidUserDetailsFault" xmlns:tns="http://server.user.nevernote.soar"/>
+      </operation>
+      <operation name="updateUser" qname="operNS:updateUser" xmlns:operNS="http://server.user.nevernote.soar" soapAction="" >
+        <parameter qname="pns:user" xmlns:pns="http://server.user.nevernote.soar" type="tns:User" xmlns:tns="http://server.user.nevernote.soar"/>
+      </operation>
+      <operation name="findUser" qname="operNS:findUser" xmlns:operNS="http://server.user.nevernote.soar" returnQName="retNS:findUserReturn" xmlns:retNS="http://server.user.nevernote.soar" returnType="rtns:User" xmlns:rtns="http://server.user.nevernote.soar" soapAction="" >
+        <parameter qname="pns:nickName" xmlns:pns="http://server.user.nevernote.soar" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="deleteUser" qname="operNS:deleteUser" xmlns:operNS="http://server.user.nevernote.soar" soapAction="" >
+        <parameter qname="pns:idUser" xmlns:pns="http://server.user.nevernote.soar" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidUserFault" qname="fns:fault1" xmlns:fns="http://server.user.nevernote.soar" class="soar.nevernote.user.server.InvalidUserFault" type="tns:InvalidUserFault" xmlns:tns="http://server.user.nevernote.soar"/>
+      </operation>
+      <operation name="findUserById" qname="operNS:findUserById" xmlns:operNS="http://server.user.nevernote.soar" returnQName="retNS:findUserByIdReturn" xmlns:retNS="http://server.user.nevernote.soar" returnType="rtns:User" xmlns:rtns="http://server.user.nevernote.soar" soapAction="" >
+        <parameter qname="pns:idUser" xmlns:pns="http://server.user.nevernote.soar" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="findUser deleteUser updateUser findUserById createUser"/>
+
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote.soar"
+        qname="ns:User"
+        type="java:soar.nevernote.user.server.User"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote.soar"
+        qname="ns:InvalidUserFault"
+        type="java:soar.nevernote.user.server.InvalidUserFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote.soar"
+        qname="ns:InvalidUserDetailsFault"
+        type="java:soar.nevernote.user.server.InvalidUserDetailsFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

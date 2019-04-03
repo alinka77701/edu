@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from UsersService WSDL service -->
+
+  <service name="Users" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://server.user.nevernote"/>
+      <parameter name="wsdlServiceElement" value="UsersService"/>
+      <parameter name="schemaQualified" value="http://server.user.nevernote"/>
+      <parameter name="wsdlServicePort" value="Users"/>
+      <parameter name="className" value="nevernote.user.server.Users"/>
+      <parameter name="wsdlPortType" value="Users"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://server.user.nevernote" name="updateUser" qname="operNS:updateUser" soapAction="">
+        <parameter xmlns:pns="http://server.user.nevernote" xmlns:tns="http://server.user.nevernote" qname="pns:user" type="tns:User"/>
+        <fault xmlns:fns="http://server.user.nevernote" xmlns:tns="http://server.user.nevernote" name="InvalidUserFault" qname="fns:fault1" class="nevernote.user.server.InvalidUserFault" type="tns:InvalidUserFault"/>
+        <fault xmlns:fns="http://server.user.nevernote" xmlns:tns="http://server.user.nevernote" name="InvalidUserDetailsFault" qname="fns:fault" class="nevernote.user.server.InvalidUserDetailsFault" type="tns:InvalidUserDetailsFault"/>
+      </operation>
+      <operation xmlns:operNS="http://server.user.nevernote" name="deleteUser" qname="operNS:deleteUser" soapAction="">
+        <parameter xmlns:pns="http://server.user.nevernote" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idUser" type="tns:int"/>
+        <fault xmlns:fns="http://server.user.nevernote" xmlns:tns="http://server.user.nevernote" name="InvalidUserFault" qname="fns:fault1" class="nevernote.user.server.InvalidUserFault" type="tns:InvalidUserFault"/>
+      </operation>
+      <operation xmlns:operNS="http://server.user.nevernote" xmlns:retNS="http://server.user.nevernote" xmlns:rtns="http://server.user.nevernote" name="findUserById" qname="operNS:findUserById" returnQName="retNS:findUserByIdReturn" returnType="rtns:User" soapAction="">
+        <parameter xmlns:pns="http://server.user.nevernote" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idUser" type="tns:int"/>
+        <fault xmlns:fns="http://server.user.nevernote" xmlns:tns="http://server.user.nevernote" name="InvalidUserFault" qname="fns:fault1" class="nevernote.user.server.InvalidUserFault" type="tns:InvalidUserFault"/>
+      </operation>
+      <parameter name="allowedMethods" value="deleteUser updateUser findUserById"/>
+
+      <typeMapping xmlns:ns="http://server.user.nevernote" qname="ns:InvalidUserFault" type="java:nevernote.user.server.InvalidUserFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://server.user.nevernote" qname="ns:User" type="java:nevernote.user.server.User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://server.user.nevernote" qname="ns:InvalidUserDetailsFault" type="java:nevernote.user.server.InvalidUserDetailsFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

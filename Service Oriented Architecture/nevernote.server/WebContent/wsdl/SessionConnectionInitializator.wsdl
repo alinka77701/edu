@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://server.sessionconnection.nevernote" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://server.sessionconnection.nevernote" xmlns:intf="http://server.sessionconnection.nevernote" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://server.sessionconnection.nevernote" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="closeConnection">
+    <complexType/>
+   </element>
+   <element name="closeConnectionResponse">
+    <complexType/>
+   </element>
+   <element name="connectSession">
+    <complexType/>
+   </element>
+   <element name="connectSessionResponse">
+    <complexType/>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="connectSessionRequest">
+
+      <wsdl:part element="impl:connectSession" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeConnectionRequest">
+
+      <wsdl:part element="impl:closeConnection" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="closeConnectionResponse">
+
+      <wsdl:part element="impl:closeConnectionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="connectSessionResponse">
+
+      <wsdl:part element="impl:connectSessionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="SessionConnectionInitializator">
+
+      <wsdl:operation name="closeConnection">
+
+         <wsdl:input message="impl:closeConnectionRequest" name="closeConnectionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:closeConnectionResponse" name="closeConnectionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="connectSession">
+
+         <wsdl:input message="impl:connectSessionRequest" name="connectSessionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:connectSessionResponse" name="connectSessionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="SessionConnectionInitializatorSoapBinding" type="impl:SessionConnectionInitializator">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="closeConnection">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="closeConnectionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="closeConnectionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="connectSession">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="connectSessionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="connectSessionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="SessionConnectionInitializatorService">
+
+      <wsdl:port binding="impl:SessionConnectionInitializatorSoapBinding" name="SessionConnectionInitializator">
+
+         <wsdlsoap:address location="http://localhost:7672/nevernote.server/services/SessionConnectionInitializator"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

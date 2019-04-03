@@ -1,0 +1,18 @@
+<h1>List of issues reported by and assigned to specific team members</h1>
+
+<table border="1">
+	<tr>
+		<td>Issue name</td>
+		<td>ID</td>
+		<td>Reporter</td>
+		<td>Assignee</td>
+	</tr>
+	[%for (i in Issue.allInstances()){%]
+	<tr>
+		<td>[%=i.Name%]</td>
+		<td> [%=i.ID%]</td>
+		<td>[%=i.Reporter.Name%]</td>
+		<td> [%=i.Assignee.Name%]</td>
+	</tr>
+	[%}%]
+</table>

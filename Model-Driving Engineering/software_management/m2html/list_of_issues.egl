@@ -1,0 +1,7 @@
+<h1>List of Issues</h1>
+
+<ul>
+	[%for (i in Issue.allInstances()){%]
+	<li><a href="issue[%=i.ID%].html">[%=i.Name%]</a></li>
+	[%}%]
+</ul>

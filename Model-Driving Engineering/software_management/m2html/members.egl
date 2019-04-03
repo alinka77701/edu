@@ -1,0 +1,33 @@
+<head>
+	<style>
+		body {
+		    font-size: 20px;
+		    font-family: 'Bad Script', cursive;
+		    background: linear-gradient(to bottom left,#70e1f5, #ffd194);
+		}
+		
+		#container {
+		    position: relative;
+		    width: 90%;
+		    height:100%;
+		    margin:0 auto;
+		    text-align: center;
+		    overflow:hidden;
+		}
+	</style>
+</head>
+<body>
+	<h1>List of members</h1>
+	<div id="container">
+		<table border="1">
+			<tr>
+				<td>Member name</td>
+			</tr>
+			[%for (m in Member.all){%]
+			<tr>
+				<td>[%=m.Name%]</td>
+			</tr>
+		[%}%]
+		</table>
+	</div>
+</body>

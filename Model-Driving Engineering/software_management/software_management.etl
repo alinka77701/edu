@@ -1,0 +1,113 @@
+pre {
+  "Transformation begins".println();
+}
+
+rule Model2SimplifiedModel
+	transform m : InitialModel!Model
+	to ms : SimplifiedModel!Model {
+	
+	/*Find open issues */
+	var open_issues : OrderedSet;
+	open_issues.addAll(m.issues.select(i|i.status==Status#open));
+	("Open Issues:").println();
+	open_issues.name.println();
+	
+	/*Find closed issues */
+	var closed_issues : OrderedSet;
+	closed_issues.addAll(m.issues.select(i|i.status==Status#resolved));
+	("Closed Issues:").println();
+	closed_issues.name.println();
+	
+	/*Find reporters and assignees of open issues
+      and add them to the collection of members */
+	var members:OrderedSet;
+	for (i in open_issues){
+		var people:OrderedSet;
+		people=i.reporter;
+		for (p in people){
+			if(members.indexOf(p)==-1)
+				members.add(p);
+		}
+		people=i.assignee;
+		for (p in people){
+			if(members.indexOf(p)==-1)
+				members.add(p);
+		}
+	}
+	
+	/*Find member who are nor assignee neither reporter
+     of any issue and add them to the collection of members*/
+	for (member in m.members){
+		if(members.indexOf(member)==-1)
+		{
+			var isInReportersOfClosedIssues=false;
+			var isInAssigneesOfClosedIssues=false;
+			for (i in closed_issues)
+			{
+				var reporters:OrderedSet;
+				reporters=i.reporter;
+				if(reporters.indexOf(member)<>-1)
+				{
+				  isInReportersOfClosedIssues=true;
+				  break;
+				}
+				
+				var assignees:OrderedSet;
+				assignees=i.assignee;
+				if(assignees.indexOf(member)<>-1)
+				{
+					isInAssigneesOfClosedIssues=true;
+					break;
+				}	
+			}
+			if(isInReportersOfClosedIssues==false and isInAssigneesOfClosedIssues==false)
+					members.add(member);	
+		}
+	}
+	("Members excluding members who are only associated to closed issues:").println();
+	members.name.println();
+	
+	/*Find product excluding those who are only associated to closed issues 
+      and add them to the collection of products*/
+	var products:OrderedSet;
+	for (i in open_issues){
+		var versions:OrderedSet;
+		versions=i.versions;
+		for (v in versions){
+			if(products.indexOf(v.parentProduct)==-1)
+				products.add(v.parentProduct);
+		}
+	}
+	
+	for (product in m.products){
+		if(products.indexOf(product)==-1)
+		{
+			for (i in closed_issues)
+			{
+			    var isInProductsOfClosedIssues=false;
+				var versions:OrderedSet;
+				versions=i.versions;
+				for (pv in product.versions)
+				{
+					if(versions.indexOf(pv)<>-1)
+						isInProductsOfClosedIssues=true;
+				}
+				
+				if(isInProductsOfClosedIssues==false)
+					products.add(product);	
+			}
+		}
+	}
+	("Products excluding those which are only associated to closed issues:").println();
+	products.name.println();
+	
+	/*Add elemnts to the simplified model*/
+	ms.issues.addAll(open_issues);
+	ms.products.addAll(products);
+	ms.members.addAll(members);
+}
+
+
+post {
+  "Transformation finished".println();
+}

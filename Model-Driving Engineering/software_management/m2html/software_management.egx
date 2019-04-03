@@ -1,0 +1,66 @@
+pre { "Transformation starting...".println(); }
+
+rule Product2HTML
+transform p : Product { 
+	guard : p.size() > 0
+	template : "products.egl"
+	target : "gen/products.html"
+}
+
+rule Member2HTML
+transform m : Member { 
+	guard : m.size() > 0
+	template : "members.egl"
+	target : "gen/members.html"
+}
+
+rule IssueMember2HTML
+transform i : Request { 
+	guard : Issue.allInstances().size() > 0
+	template : "issues_members.egl"
+	target : "gen/issues_members.html"
+}
+
+rule IssueProduct2HTML
+transform i : Request { 
+	guard : Issue.allInstances().size() > 0
+	template : "issues_products.egl"
+	target : "gen/issues_products.html"
+}
+
+rule ListOfIssues2HTML
+transform i : Request { 
+	guard : Issue.allInstances().size() > 0
+	template : "list_of_issues.egl"
+	target : "gen/list_of_issues.html"
+}
+
+rule RequestComments2HTML
+transform i : Request { 
+	parameters {
+	    var params : new Map;
+	    params.put("index", Issue.all.indexOf(i) + 1);
+	    return params;
+	  }
+	template : "issue_comments.egl"
+	target : "gen/issue"+i.ID+".html"
+}
+
+rule BugComments2HTML
+transform i : Bug { 
+	parameters {
+	    var params : new Map;
+	    params.put("index", Issue.all.indexOf(i) + 1);
+	    return params;
+	  }
+	template : "issue_comments.egl"
+	target : "gen/issue"+i.ID+".html"
+}
+
+rule IssueBlockers2HTML
+transform i : Bug { 
+	template : "issues_blockers.egl"
+	target : "gen/issues_blockers.html"
+}
+
+post { "Transformation finished! Now you can find generated HTML pages in `gen/` folder.".println(); }

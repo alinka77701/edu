@@ -1,0 +1,18 @@
+<h1>List of issues blocking issues in order of importance</h1>
+
+<table border="1">
+	<tr>
+		<td>Issue name</td>
+		<td>ID</td>
+		<td>Description</td>
+		<td>Number of blocked issues</td>
+	</tr>
+	[%for (i in Issue.allInstances().sortBy(i|i.blockerFor.size()).invert()){%]
+	<tr>
+		<td>[%=i.Name%]</td>
+		<td>[%=i.ID%]</td>
+		<td>[%=i.Description%]</td>
+		<td>[%=i.blockerFor.size()%]</td>
+	</tr>
+	[%}%]
+</table>

@@ -1,0 +1,79 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from NotebooksService WSDL service -->
+
+  <service name="Notebooks" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://server.notebook.nevernote.soar"/>
+      <parameter name="wsdlServiceElement" value="NotebooksService"/>
+      <parameter name="schemaQualified" value="http://server.notebook.nevernote.soar"/>
+      <parameter name="wsdlServicePort" value="Notebooks"/>
+      <parameter name="className" value="soar.nevernote.notebook.server.NotebooksSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Notebooks"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="tryAuth" qname="operNS:tryAuth" xmlns:operNS="http://server.notebook.nevernote.soar" soapAction="" >
+      </operation>
+      <operation name="createNotebook" qname="operNS:createNotebook" xmlns:operNS="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:notebook" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:Notebook" xmlns:tns="http://server.notebook.nevernote.soar"/>
+        <fault name="InvalidNotebookDetailsFault" qname="fns:fault" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookDetailsFault" type="tns:InvalidNotebookDetailsFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+      </operation>
+      <operation name="findNotebook" qname="operNS:findNotebook" xmlns:operNS="http://server.notebook.nevernote.soar" returnQName="retNS:findNotebookReturn" xmlns:retNS="http://server.notebook.nevernote.soar" returnType="rtns:Notebook" xmlns:rtns="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:nameNotebook" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNotebookFault" qname="fns:fault1" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookFault" type="tns:InvalidNotebookFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+      </operation>
+      <operation name="findNotebookById" qname="operNS:findNotebookById" xmlns:operNS="http://server.notebook.nevernote.soar" returnQName="retNS:findNotebookByIdReturn" xmlns:retNS="http://server.notebook.nevernote.soar" returnType="rtns:Notebook" xmlns:rtns="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:idNotebook" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNotebookFault" qname="fns:fault1" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookFault" type="tns:InvalidNotebookFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+      </operation>
+      <operation name="deleteNotebook" qname="operNS:deleteNotebook" xmlns:operNS="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:name" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidNotebookFault" qname="fns:fault1" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookFault" type="tns:InvalidNotebookFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+      </operation>
+      <operation name="getAllNotebooks" qname="operNS:getAllNotebooks" xmlns:operNS="http://server.notebook.nevernote.soar" returnQName="retNS:getAllNotebooksReturn" xmlns:retNS="http://server.notebook.nevernote.soar" returnType="rtns:Notebook" xmlns:rtns="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:userId" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="updateNotebook" qname="operNS:updateNotebook" xmlns:operNS="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:notebook" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:Notebook" xmlns:tns="http://server.notebook.nevernote.soar"/>
+        <fault name="InvalidNotebookFault" qname="fns:fault1" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookFault" type="tns:InvalidNotebookFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+        <fault name="InvalidNotebookDetailsFault" qname="fns:fault" xmlns:fns="http://server.notebook.nevernote.soar" class="soar.nevernote.notebook.server.InvalidNotebookDetailsFault" type="tns:InvalidNotebookDetailsFault" xmlns:tns="http://server.notebook.nevernote.soar"/>
+      </operation>
+      <operation name="deleteAllNotebooks" qname="operNS:deleteAllNotebooks" xmlns:operNS="http://server.notebook.nevernote.soar" soapAction="" >
+        <parameter qname="pns:userId" xmlns:pns="http://server.notebook.nevernote.soar" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="tryAuth deleteNotebook deleteAllNotebooks createNotebook getAllNotebooks updateNotebook findNotebook findNotebookById"/>
+
+      <typeMapping
+        xmlns:ns="http://server.notebook.nevernote.soar"
+        qname="ns:InvalidNotebookDetailsFault"
+        type="java:soar.nevernote.notebook.server.InvalidNotebookDetailsFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.notebook.nevernote.soar"
+        qname="ns:InvalidNotebookFault"
+        type="java:soar.nevernote.notebook.server.InvalidNotebookFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.notebook.nevernote.soar"
+        qname="ns:Notebook"
+        type="java:soar.nevernote.notebook.server.Notebook"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

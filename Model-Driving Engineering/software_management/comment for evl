@@ -1,0 +1,11 @@
+Description of bags for evl testing.
+
+1.third req - DescriptionMustBeDefined
+2.third bug - DescriptionMustBeTenLength
+3.First bug, second bug - IdMustBeUnique
+4.third bug - CanNotBeDuplicateOfItself
+5.Second bug - CanNotBeBlockedByItself
+6.third req is resolved by blocked by opened 6 req and first bug - CanNotHaveOpenBlockers
+7.Second Bug blocked by first request - BugsCannotBeBlockedByRequests
+8.ID=6 request-IssueMustHaveName
+9.Third req is blocked by six req and visa versa - NoBlockingCycle

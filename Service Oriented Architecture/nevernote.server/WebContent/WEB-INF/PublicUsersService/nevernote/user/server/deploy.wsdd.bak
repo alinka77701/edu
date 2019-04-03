@@ -1,0 +1,60 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from PublicUsersService WSDL service -->
+
+  <service name="PublicUsers" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://server.user.nevernote"/>
+      <parameter name="wsdlServiceElement" value="PublicUsersService"/>
+      <parameter name="schemaQualified" value="http://server.user.nevernote"/>
+      <parameter name="wsdlServicePort" value="PublicUsers"/>
+      <parameter name="className" value="nevernote.user.server.PublicUsersSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="PublicUsers"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="createUser" qname="operNS:createUser" xmlns:operNS="http://server.user.nevernote" soapAction="" >
+        <parameter qname="pns:user" xmlns:pns="http://server.user.nevernote" type="tns:User" xmlns:tns="http://server.user.nevernote"/>
+        <fault name="InvalidUserDetailsFault" qname="fns:fault" xmlns:fns="http://server.user.nevernote" class="nevernote.user.server.InvalidUserDetailsFault" type="tns:InvalidUserDetailsFault" xmlns:tns="http://server.user.nevernote"/>
+      </operation>
+      <operation name="findUser" qname="operNS:findUser" xmlns:operNS="http://server.user.nevernote" returnQName="retNS:findUserReturn" xmlns:retNS="http://server.user.nevernote" returnType="rtns:User" xmlns:rtns="http://server.user.nevernote" soapAction="" >
+        <parameter qname="pns:nickName" xmlns:pns="http://server.user.nevernote" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="InvalidUserFault" qname="fns:fault1" xmlns:fns="http://server.user.nevernote" class="nevernote.user.server.InvalidUserFault" type="tns:InvalidUserFault" xmlns:tns="http://server.user.nevernote"/>
+      </operation>
+      <operation name="getAllUsers" qname="operNS:getAllUsers" xmlns:operNS="http://server.user.nevernote" returnQName="retNS:getAllUsersReturn" xmlns:retNS="http://server.user.nevernote" returnType="rtns:User" xmlns:rtns="http://server.user.nevernote" soapAction="" >
+      </operation>
+      <parameter name="allowedMethods" value="findUser getAllUsers createUser"/>
+
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote"
+        qname="ns:InvalidUserFault"
+        type="java:nevernote.user.server.InvalidUserFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote"
+        qname="ns:User"
+        type="java:nevernote.user.server.User"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://server.user.nevernote"
+        qname="ns:InvalidUserDetailsFault"
+        type="java:nevernote.user.server.InvalidUserDetailsFault"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

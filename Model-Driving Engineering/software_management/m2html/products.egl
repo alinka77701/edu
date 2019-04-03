@@ -1,0 +1,15 @@
+<h1>List of products</h1>
+
+<table border="1">
+<tr>
+<td>Product name</td>
+<td>Versions</td>
+</tr>
+[%for (p in Product.all){%]
+<tr>
+<td>[%=p.Name%]</td>
+<td> [%=p.Versions.Name%]
+</td>
+</tr>
+[%}%]
+</table>

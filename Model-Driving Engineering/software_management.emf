@@ -1,0 +1,86 @@
+@namespace(uri="software_management",prefix="")
+package software_management;
+
+@gmf.diagram
+class Model{
+	val Issue[*] issues;
+	val Member[+] members;
+	val Product[+] products;
+}
+
+@gmf.node(label="name")
+abstract class NamedElement {
+	attr String[1] name;
+}
+
+@gmf.node(size="80,30", figure="rectangle")
+class Version extends NamedElement{
+	ref Product[1]#versions parentProduct;
+}
+
+@gmf.node(figure="ellipse",label.icon="true")
+class Product extends NamedElement{
+	@gmf.compartment(layout="list", collapsible="false")
+	val Version[*]#parentProduct versions;
+}
+
+@gmf.node(label="ID, name, status",  label.pattern="{0}, {1}, {2}", figure="rectangle",label.icon="true")
+abstract class Issue extends NamedElement{
+	attr int ID;
+	attr String description;
+	attr Status status;
+	
+	@gmf.link(label="reporter",width="2", color="0,0,255", source.decoration="none", target.decoration="arrow", style="solid")
+	ref Member[+] reporter;
+	
+	@gmf.link(label="assignee",width="2", color="0,255,255", source.decoration="none", target.decoration="arrow", style="solid")
+	ref Member[*] assignee;
+	
+	@gmf.compartment(layout="list", collapsible="false")
+	val Comment[*] comments;
+	
+    @gmf.link(label="relatedToVersion",width="2", color="255,0,255", source.decoration="none", target.decoration="arrow", style="solid")
+	ref Version[+] versions;
+	
+	@gmf.link(label="duplicateOf",width="2", color="0,255,0", source.decoration="none", target.decoration="arrow", style="dash")
+	ref Issue[*] duplicateOf;
+	
+	@gmf.link(label="blockedBy",width="2", color="255,0,0", source.decoration="none", 
+      target.decoration="arrow", style="dash")
+	ref Issue[*]#blockerFor blockedBy;
+
+ 	ref Issue[*]#blockedBy blockerFor; 
+}
+
+enum Status{
+	open;
+	resolved;
+}
+
+class Bug extends Issue{
+
+}
+
+class Request extends Issue{
+  
+}
+
+@gmf.node(figure="svg", svg.uri="platform:/plugin/software_management.edit/icons/full/obj16/boss.svg",size="80,40",label.icon="false")
+class Member extends NamedElement{
+	
+}
+
+@gmf.node(label="description", figure="rounded", label.icon="true", border.style="dash")
+class Comment {
+	attr String description;
+	attr Date creationDate;
+	
+	@gmf.link(label="author",width="1", color="0,0,0", source.decoration="none", 
+      target.decoration="arrow", style="solid")
+	ref Member[1] author;
+	
+   @gmf.compartment(layout="list", collapsible="false")
+	val Comment[*] replies;
+}
+
+

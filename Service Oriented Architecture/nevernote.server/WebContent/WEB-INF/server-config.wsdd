@@ -1,0 +1,281 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="/Users/alinasilina/eclipse-soar-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/nevernote.server/WEB-INF/attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:service name="PublicNotebooks" provider="java:RPC" style="wrapped" use="literal">
+  <ns2:operation name="getAllPublicNotebooks" qname="ns1:getAllPublicNotebooks" returnQName="ns1:getAllPublicNotebooksReturn" returnType="ns1:Notebook" soapAction="" xmlns:ns1="http://server.notebook.nevernote" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
+  <ns1:parameter name="allowedMethods" value="getAllPublicNotebooks"/>
+  <ns1:parameter name="wsdlPortType" value="PublicNotebooks"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlServicePort" value="PublicNotebooks"/>
+  <ns1:parameter name="className" value="nevernote.notebook.server.PublicNotebooks"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="PublicNotebooksService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns2:Notebook" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.notebook.server.Notebook" xmlns:ns2="http://server.notebook.nevernote"/>
+ </ns1:service>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="PublicUsers" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="createUser" qname="ns3:createUser" soapAction="" xmlns:ns3="http://server.user.nevernote">
+   <ns1:parameter qname="ns3:user" type="ns3:User"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserDetailsFault" qname="ns3:fault" type="ns3:InvalidUserDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="findUser" qname="ns4:findUser" returnQName="ns4:findUserReturn" returnType="ns4:User" soapAction="" xmlns:ns4="http://server.user.nevernote">
+   <ns1:parameter qname="ns4:nickName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserFault" qname="ns4:fault1" type="ns4:InvalidUserFault"/>
+  </ns1:operation>
+  <ns1:operation name="getAllUsers" qname="ns5:getAllUsers" returnQName="ns5:getAllUsersReturn" returnType="ns5:User" soapAction="" xmlns:ns5="http://server.user.nevernote"/>
+  <ns1:parameter name="allowedMethods" value="findUser getAllUsers createUser"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="PublicUsers"/>
+  <ns1:parameter name="className" value="nevernote.user.server.PublicUsers"/>
+  <ns1:parameter name="wsdlServicePort" value="PublicUsers"/>
+  <ns1:parameter name="schemaQualified" value="http://server.user.nevernote"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.user.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="PublicUsersService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns6:InvalidUserFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.InvalidUserFault" xmlns:ns6="http://server.user.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns7:User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.User" xmlns:ns7="http://server.user.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:InvalidUserDetailsFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.InvalidUserDetailsFault" xmlns:ns8="http://server.user.nevernote"/>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="NotebooksPublic" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="getAllPublicNotebooks" qname="ns9:getAllPublicNotebooks" returnQName="ns9:getAllPublicNotebooksReturn" returnType="ns9:Notebook" soapAction="" xmlns:ns9="http://server.notebook.nevernote"/>
+  <ns1:parameter name="allowedMethods" value="getAllPublicNotebooks"/>
+  <ns1:parameter name="wsdlPortType" value="NotebooksPublic"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlServicePort" value="NotebooksPublic"/>
+  <ns1:parameter name="className" value="nevernote.notebook.server.NotebooksPublic"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="NotebooksPublicService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns10:Notebook" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.notebook.server.Notebook" xmlns:ns10="http://server.notebook.nevernote"/>
+ </ns1:service>
+ <ns1:service name="Notebooks" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="tryAuth" qname="ns11:tryAuth" soapAction="" xmlns:ns11="http://server.notebook.nevernote"/>
+  <ns1:operation name="createNotebook" qname="ns12:createNotebook" soapAction="" xmlns:ns12="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns12:notebook" type="ns12:Notebook"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookDetailsFault" qname="ns12:fault" type="ns12:InvalidNotebookDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="findNotebook" qname="ns13:findNotebook" returnQName="ns13:findNotebookReturn" returnType="ns13:Notebook" soapAction="" xmlns:ns13="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns13:nameNotebook" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookFault" qname="ns13:fault1" type="ns13:InvalidNotebookFault"/>
+  </ns1:operation>
+  <ns1:operation name="findNotebookById" qname="ns14:findNotebookById" returnQName="ns14:findNotebookByIdReturn" returnType="ns14:Notebook" soapAction="" xmlns:ns14="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns14:idNotebook" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookFault" qname="ns14:fault1" type="ns14:InvalidNotebookFault"/>
+  </ns1:operation>
+  <ns1:operation name="deleteNotebook" qname="ns15:deleteNotebook" soapAction="" xmlns:ns15="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns15:name" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns15:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookFault" qname="ns15:fault1" type="ns15:InvalidNotebookFault"/>
+  </ns1:operation>
+  <ns1:operation name="makeNotebookPublic" qname="ns16:makeNotebookPublic" soapAction="" xmlns:ns16="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns16:notebookId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns16:nickName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getAllNotebooks" qname="ns17:getAllNotebooks" returnQName="ns17:getAllNotebooksReturn" returnType="ns17:Notebook" soapAction="" xmlns:ns17="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns17:userId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="updateNotebook" qname="ns18:updateNotebook" soapAction="" xmlns:ns18="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns18:notebook" type="ns18:Notebook"/>
+   <ns1:parameter qname="ns18:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookFault" qname="ns18:fault1" type="ns18:InvalidNotebookFault"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookDetailsFault" qname="ns18:fault" type="ns18:InvalidNotebookDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="deleteAllNotebooks" qname="ns19:deleteAllNotebooks" soapAction="" xmlns:ns19="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns19:userId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="pushNotification" qname="ns20:pushNotification" soapAction="" xmlns:ns20="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns20:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns20:notebook" type="ns20:Notebook"/>
+   <ns1:parameter qname="ns20:isDeleted" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns20:isChangedShared" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="deletePublicNotebook" qname="ns21:deletePublicNotebook" soapAction="" xmlns:ns21="http://server.notebook.nevernote">
+   <ns1:parameter qname="ns21:notebookId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns21:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.notebook.server.InvalidNotebookFault" qname="ns21:fault1" type="ns21:InvalidNotebookFault"/>
+  </ns1:operation>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+    <ns1:parameter name="passwordCallbackClass" value="nevernote.notebook.server.PasswordHandler"/>
+    <ns1:parameter name="action" value="UsernameToken"/>
+      <ns1:parameter name="passwordType" value="PasswordDigest"/>
+   </ns1:handler>
+</ns1:requestFlow>
+  <ns1:parameter name="allowedMethods" value="tryAuth deleteNotebook deleteAllNotebooks deletePublicNotebook createNotebook getAllNotebooks updateNotebook findNotebook findNotebookById makeNotebookPublic pushNotification"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="Notebooks"/>
+  <ns1:parameter name="className" value="nevernote.notebook.server.Notebooks"/>
+  <ns1:parameter name="wsdlServicePort" value="Notebooks"/>
+  <ns1:parameter name="schemaQualified" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.notebook.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="NotebooksService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns22:InvalidNotebookFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.notebook.server.InvalidNotebookFault" xmlns:ns22="http://server.notebook.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns23:InvalidNotebookDetailsFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.notebook.server.InvalidNotebookDetailsFault" xmlns:ns23="http://server.notebook.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns24:Notebook" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.notebook.server.Notebook" xmlns:ns24="http://server.notebook.nevernote"/>
+ </ns1:service>
+ <ns1:service name="DatabaseConnection" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="openConnection" qname="ns25:openConnection" soapAction="" xmlns:ns25="http://server.database.nevernote"/>
+  <ns1:operation name="closeConnection" qname="ns26:closeConnection" soapAction="" xmlns:ns26="http://server.database.nevernote"/>
+  <ns1:parameter name="allowedMethods" value="openConnection closeConnection"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="DatabaseConnection"/>
+  <ns1:parameter name="className" value="nevernote.database.server.DatabaseConnection"/>
+  <ns1:parameter name="wsdlServicePort" value="DatabaseConnection"/>
+  <ns1:parameter name="schemaQualified" value="http://server.database.nevernote"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.database.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="DatabaseConnectionService"/>
+ </ns1:service>
+ <ns1:service name="Users" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="updateUser" qname="ns27:updateUser" soapAction="" xmlns:ns27="http://server.user.nevernote">
+   <ns1:parameter qname="ns27:user" type="ns27:User"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserFault" qname="ns27:fault1" type="ns27:InvalidUserFault"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserDetailsFault" qname="ns27:fault" type="ns27:InvalidUserDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="deleteUser" qname="ns28:deleteUser" soapAction="" xmlns:ns28="http://server.user.nevernote">
+   <ns1:parameter qname="ns28:idUser" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserFault" qname="ns28:fault1" type="ns28:InvalidUserFault"/>
+  </ns1:operation>
+  <ns1:operation name="findUserById" qname="ns29:findUserById" returnQName="ns29:findUserByIdReturn" returnType="ns29:User" soapAction="" xmlns:ns29="http://server.user.nevernote">
+   <ns1:parameter qname="ns29:idUser" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.user.server.InvalidUserFault" qname="ns29:fault1" type="ns29:InvalidUserFault"/>
+  </ns1:operation>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+    <ns1:parameter name="passwordCallbackClass" value="nevernote.notebook.server.PasswordHandler"/>
+    <ns1:parameter name="action" value="UsernameToken"/>
+   </ns1:handler>
+</ns1:requestFlow>
+  <ns1:parameter name="allowedMethods" value="deleteUser updateUser findUserById"/>
+  <ns1:parameter name="wsdlPortType" value="Users"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://server.user.nevernote"/>
+  <ns1:parameter name="wsdlServicePort" value="Users"/>
+  <ns1:parameter name="className" value="nevernote.user.server.Users"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.user.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="UsersService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns30:InvalidUserFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.InvalidUserFault" xmlns:ns30="http://server.user.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns31:User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.User" xmlns:ns31="http://server.user.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns32:InvalidUserDetailsFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.user.server.InvalidUserDetailsFault" xmlns:ns32="http://server.user.nevernote"/>
+ </ns1:service>
+ <ns1:service name="Notes" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="createNote" qname="ns33:createNote" soapAction="" xmlns:ns33="http://server.note.nevernote">
+   <ns1:parameter qname="ns33:note" type="ns33:Note"/>
+   <ns1:parameter qname="ns33:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteDetailsFault" qname="ns33:fault" type="ns33:InvalidNoteDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="findNote" qname="ns34:findNote" returnQName="ns34:findNoteReturn" returnType="ns34:Note" soapAction="" xmlns:ns34="http://server.note.nevernote">
+   <ns1:parameter qname="ns34:titleNote" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns34:notebookId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteFault" qname="ns34:fault1" type="ns34:InvalidNoteFault"/>
+  </ns1:operation>
+  <ns1:operation name="pushNotification" qname="ns35:pushNotification" soapAction="" xmlns:ns35="http://server.note.nevernote">
+   <ns1:parameter qname="ns35:noteTitle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns35:nickName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns35:isDeleted" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns35:isCreated" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns35:parentNotebookId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="findNoteById" qname="ns36:findNoteById" returnQName="ns36:findNoteByIdReturn" returnType="ns36:Note" soapAction="" xmlns:ns36="http://server.note.nevernote">
+   <ns1:parameter qname="ns36:idNote" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteFault" qname="ns36:fault1" type="ns36:InvalidNoteFault"/>
+  </ns1:operation>
+  <ns1:operation name="deleteNoteFromNotebook" qname="ns37:deleteNoteFromNotebook" soapAction="" xmlns:ns37="http://server.note.nevernote">
+   <ns1:parameter qname="ns37:idNote" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns37:idNotebook" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns37:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteFault" qname="ns37:fault1" type="ns37:InvalidNoteFault"/>
+  </ns1:operation>
+  <ns1:operation name="updateNoteInNotebook" qname="ns38:updateNoteInNotebook" soapAction="" xmlns:ns38="http://server.note.nevernote">
+   <ns1:parameter qname="ns38:note" type="ns38:Note"/>
+   <ns1:parameter qname="ns38:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteFault" qname="ns38:fault1" type="ns38:InvalidNoteFault"/>
+   <ns1:fault class="nevernote.note.server.InvalidNoteDetailsFault" qname="ns38:fault" type="ns38:InvalidNoteDetailsFault"/>
+  </ns1:operation>
+  <ns1:operation name="getAllNotesInNotebook" qname="ns39:getAllNotesInNotebook" returnQName="ns39:getAllNotesInNotebookReturn" returnType="ns39:Note" soapAction="" xmlns:ns39="http://server.note.nevernote">
+   <ns1:parameter qname="ns39:idNotebook" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="deleteAllNotesInNotebook" qname="ns40:deleteAllNotesInNotebook" soapAction="" xmlns:ns40="http://server.note.nevernote">
+   <ns1:parameter qname="ns40:idNotebook" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns40:changedByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getAllStarredNotes" qname="ns41:getAllStarredNotes" returnQName="ns41:getAllStarredNotesReturn" returnType="ns41:Note" soapAction="" xmlns:ns41="http://server.note.nevernote">
+   <ns1:parameter qname="ns41:idUser" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+    <ns1:parameter name="passwordCallbackClass" value="nevernote.notebook.server.PasswordHandler"/>
+    <ns1:parameter name="action" value="UsernameToken"/>
+   </ns1:handler>
+</ns1:requestFlow>
+  <ns1:parameter name="allowedMethods" value="deleteAllNotesInNotebook findNoteById updateNoteInNotebook getAllNotesInNotebook createNote findNote deleteNoteFromNotebook getAllStarredNotes pushNotification"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="Notes"/>
+  <ns1:parameter name="className" value="nevernote.note.server.Notes"/>
+  <ns1:parameter name="wsdlServicePort" value="Notes"/>
+  <ns1:parameter name="schemaQualified" value="http://server.note.nevernote"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.note.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="NotesService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns42:InvalidNoteDetailsFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.note.server.InvalidNoteDetailsFault" xmlns:ns42="http://server.note.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns43:Note" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.note.server.Note" xmlns:ns43="http://server.note.nevernote"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns44:InvalidNoteFault" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:nevernote.note.server.InvalidNoteFault" xmlns:ns44="http://server.note.nevernote"/>
+ </ns1:service>
+ <ns1:service name="SessionConnectionInitializator" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="closeConnection" qname="ns45:closeConnection" soapAction="" xmlns:ns45="http://server.sessionconnection.nevernote"/>
+  <ns1:operation name="connectSession" qname="ns46:connectSession" soapAction="" xmlns:ns46="http://server.sessionconnection.nevernote"/>
+  <ns1:parameter name="allowedMethods" value="connectSession closeConnection"/>
+  <ns1:parameter name="wsdlPortType" value="SessionConnectionInitializator"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://server.sessionconnection.nevernote"/>
+  <ns1:parameter name="wsdlServicePort" value="SessionConnectionInitializator"/>
+  <ns1:parameter name="className" value="nevernote.sessionconnection.server.SessionConnectionInitializator"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.sessionconnection.nevernote"/>
+  <ns1:parameter name="wsdlServiceElement" value="SessionConnectionInitializatorService"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>
