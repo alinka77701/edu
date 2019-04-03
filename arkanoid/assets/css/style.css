@@ -1,0 +1,46 @@
+.game{
+    width: 1004px;
+    max-height:1200px;
+    min-height: 700px;
+    margin: 0 auto;
+}
+
+#game-field{
+    width: 1004px;
+    min-height: 700px;
+    margin: 0 auto;
+    background: #ffc7fc21;
+    border: 3px solid #ffcffd;
+    position: relative;
+}
+
+.menu{
+    margin: 10px auto;
+    text-align: center;
+}
+
+#platform{
+    width: 150px;
+    height:20px;
+    background: #ffc1fc61;
+    border: 3px solid #ffcffd;
+    position: absolute;
+}
+#ball{
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    background: #ffb0d1;
+    border-radius: 20px;
+}
+
+.square{
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    background: #ffb0d1;
+    border: 1px solid black;
+}
+#number-squares{
+
+}
